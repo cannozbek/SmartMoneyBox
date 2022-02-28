@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.0;
+
+contract SmartMoneyBox {
+    
+    mapping(address => uint ) moneyBox;
+    address public owner;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function _sendToMoneyBox(uint _amount) payable external onlyOwner() {
+        //moneyBox[msg.sender] = msg.value;
+        moneyBox[msg.sender] += _amount;
+    }
+
+    function _viewMyMoneyBox() external view returns(uint) {
+        return moneyBox[msg.sender];
+    }
+
+    modifier onlyOwner {
+        require(owner == msg.sender);
+        _;
+    }
+   
+}
